@@ -264,4 +264,12 @@ const UserPage = ({ getData, data, history }) => {
                 {/* Copyright */}
             </footer>
             {/* End footer */}
-      
+        </React.Fragment>
+    );
+};
+
+const mapStateToProps = (state) => ({
+    data: selectDataList(state)
+});
+
+export default connect(mapStateToProps, {getData})(UserPage);

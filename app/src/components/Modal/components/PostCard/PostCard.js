@@ -93,4 +93,4 @@ const PostCard = ({description, img, comments, ids, deleteCard, isAuth, liked}) 
     );
 };
 
-ex
+export default PostCard;
