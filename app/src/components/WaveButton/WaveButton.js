@@ -1,9 +1,12 @@
 import React from 'react';
 import './WaveButton.css';
+import { Router, Route, Switch, Redirect, withRouter, useHistory } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 
 const WaveButton = ({ handleClick }) => {
-    const { loginWithRedirect } = useAuth0();
+    const { loginWithRedirect, isAuthenticated } = useAuth0();
+
+    const history = useHistory();
 
     return (
         <div className="wrapper">

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {connect, useSelector} from "react-redux";
+import {connect, useSelector, useDispatch} from "react-redux";
 import { getData } from "../../store/reducers";
 import { selectDataList } from "../../store/actions";
 import {NavLink} from "react-router-dom";
@@ -98,12 +98,18 @@ const UserPage = ({ getData, data, history }) => {
     const [renderedData, setRenderedData] = useState(null);
     const [renderedPosts, setRenderedPosts] = useState([]);
     const [isFollower, setIsFollower] = useState(false);
+    const [loaderInfo, setLoaderInfo] = useState(false);
+    const [loaderPosts, setLoaderPosts] = useState(true);
     const [amountOfPages, setAmountOfPages] = useState(1);
     const [activePage, setActivePage] = useState(1);
     const [currentUserPosts, setCurrentUserPosts] = useState([]);
 
 
-    useEffect( async () => {
+
+
+
+    useEffect( () => {
+        getData();
 
         let tempPath = history.location.pathname.split("/").slice(2)[0];// window.location.pathname.split("/").slice(2)
         tempPath === user.email ? setIsRenderedDataAuthenticatedUser(true) : setIsRenderedDataAuthenticatedUser(false);
@@ -130,6 +136,7 @@ const UserPage = ({ getData, data, history }) => {
                 let guestPots = response.data.posts;
 
                 setCurrentUserPosts(guestPots)
+                setLoaderPosts(false)
             });
 
 
@@ -155,6 +162,8 @@ const UserPage = ({ getData, data, history }) => {
             const newRenderList = currentUserPosts && currentUserPosts.filter((item) => item.postComId !== deleteId);
             setCurrentUserPosts(newRenderList);
         });
+        // deletePost(deleteId, user.email);
+
     };
 
     const paginationHandler = (event, value) => {
@@ -222,7 +231,7 @@ const UserPage = ({ getData, data, history }) => {
                 <Container className={classes.cardGrid} maxwidth="md">
                     {/* End hero unit */}
                     <Grid container spacing={4}>
-                        {!currentUserPosts && <CircularProgress color="secondary" />}
+                        {loaderPosts && <CircularProgress color="secondary" />}
                         {currentUserPosts && currentUserPosts.length === 0 ? <Typography variant="h1" color="secondary">No Posts.</Typography> : ''}
                         {currentUserPosts && currentUserPosts.map((card, i) => (
                             <PostCard key={i} comments={card.comments}

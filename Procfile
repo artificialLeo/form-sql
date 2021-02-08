@@ -1,0 +1,1 @@
+web: cd ./serv; npm install; npm start

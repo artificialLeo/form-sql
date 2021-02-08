@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App/App';
 import { Auth0Provider } from "@auth0/auth0-react";
+import { Router } from "react-router-dom";
 import { Provider } from 'react-redux';
+import history from "./components/App/history";
 import store from "./store/store";
 
 ReactDOM.render(
@@ -14,7 +16,7 @@ ReactDOM.render(
   >
     <Provider store={store}>
       <App />
-    </Provider>,
+    </Provider>
   </Auth0Provider>,
   document.getElementById('root')
 );

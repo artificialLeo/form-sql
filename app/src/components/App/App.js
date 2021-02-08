@@ -1,7 +1,8 @@
 import React from 'react';
 import {useAuth0} from "@auth0/auth0-react";
-import history from "./history";
+import historyRouting from "./history";
 import { Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import WaveButton from "../WaveButton/WaveButton";
 import UserPage from "../UserPage/UserPage";
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -9,6 +10,8 @@ import Grid from '@material-ui/core/Grid';
 
 const App = () => {
     const { isAuthenticated, isLoading, user } = useAuth0();
+
+    let history = useHistory();
 
     if (isLoading) {
         return (
@@ -41,7 +44,7 @@ const App = () => {
 
     return (
         <div>
-            <Router history={history}>
+            <Router history={historyRouting}>
                 <Switch>
                     {/*{isAuthenticated ? <Redirect exact from="/" to={`/user/:${user.email}`} /> : <Redirect  exact from="/" to="/login" />}*/}
 
