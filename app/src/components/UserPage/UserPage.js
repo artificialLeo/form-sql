@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {connect, useSelector, useDispatch} from "react-redux";
+import { connect } from "react-redux";
 import { getData } from "../../store/reducers";
 import { selectDataList } from "../../store/actions";
 import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -19,7 +20,6 @@ import CloseRounded from '@material-ui/icons/CloseRounded';
 import FollowersBar from "../FollowersBar/FollowersBar";
 import Avatar from "@material-ui/core/Avatar";
 import {useAuth0} from "@auth0/auth0-react";
-import axios from "axios";
 import PostCard from "./components/PostCard/PostCard";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Pagination from "@material-ui/lab/Pagination";

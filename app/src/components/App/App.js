@@ -1,9 +1,9 @@
 import React from 'react';
 import {useAuth0} from "@auth0/auth0-react";
-import historyRouting from "./history";
-import { Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import WaveButton from "../WaveButton/WaveButton";
+
+import WaveButton from "../WaveButtonLogin/WaveButton";
 import UserPage from "../UserPage/UserPage";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
@@ -45,10 +45,6 @@ const App = () => {
     return (
         <div>
                 <Switch>
-                    {/*{isAuthenticated ? <Redirect exact from="/" to={`/user/:${user.email}`} /> : <Redirect  exact from="/" to="/login" />}*/}
-
-                    {/*<Route path="/login" component={WaveButton}/>*/}
-                    {/*<Route path={`/user/:${user.email}`} component={UserPage}/>*/}
 
                     {login()}
                     {toUserPage()}

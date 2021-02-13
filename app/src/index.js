@@ -4,7 +4,6 @@ import App from './components/App/App';
 import { Auth0Provider } from "@auth0/auth0-react";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux';
-import history from "./components/App/history";
 import store from "./store/store";
 
 ReactDOM.render(
