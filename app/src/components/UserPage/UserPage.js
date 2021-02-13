@@ -20,7 +20,7 @@ import FollowersBar from "../FollowersBar/FollowersBar";
 import Avatar from "@material-ui/core/Avatar";
 import {useAuth0} from "@auth0/auth0-react";
 import axios from "axios";
-import PostCard from "../Modal/components/PostCard/PostCard";
+import PostCard from "./components/PostCard/PostCard";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Pagination from "@material-ui/lab/Pagination";
 
@@ -98,20 +98,16 @@ const UserPage = ({ getData, data, history }) => {
     const [renderedData, setRenderedData] = useState(null);
     const [renderedPosts, setRenderedPosts] = useState([]);
     const [isFollower, setIsFollower] = useState(false);
-    const [loaderInfo, setLoaderInfo] = useState(false);
+    const [loaderInfo, setLoaderInfo] = useState(true);
     const [loaderPosts, setLoaderPosts] = useState(true);
     const [amountOfPages, setAmountOfPages] = useState(1);
     const [activePage, setActivePage] = useState(1);
     const [currentUserPosts, setCurrentUserPosts] = useState([]);
 
-
-
-
-
+    let tempPath = window.location.pathname.split("/").slice(2)[0];// window.location.pathname.split("/").slice(2)
     useEffect( () => {
         getData();
 
-        let tempPath = history.location.pathname.split("/").slice(2)[0];// window.location.pathname.split("/").slice(2)
         tempPath === user.email ? setIsRenderedDataAuthenticatedUser(true) : setIsRenderedDataAuthenticatedUser(false);
 
         axios.get("http://localhost:4000/api/users/").then(response => {
@@ -121,6 +117,7 @@ const UserPage = ({ getData, data, history }) => {
             setAmountOfPages(pagesInWindow);
             setRenderedData(tempData);
             setRenderedPosts(tempData.posts);
+            setLoaderInfo(false);
         });
 
         !isRenderedDataAuthenticatedUser &&
@@ -135,12 +132,11 @@ const UserPage = ({ getData, data, history }) => {
             .then(response => {
                 let guestPots = response.data.posts;
 
-                setCurrentUserPosts(guestPots)
-                setLoaderPosts(false)
+                setCurrentUserPosts(guestPots);
+                setLoaderPosts(false);
             });
 
-
-    }, []);
+    }, [tempPath]);
 
     const followHandler = () => {
         let tempPath = history.location.pathname.split("/").slice(2)[0];
@@ -202,6 +198,7 @@ const UserPage = ({ getData, data, history }) => {
             <main>
                 {/* Hero unit */}
                 <div className={classes.heroContent}>
+                    {loaderInfo ? <CircularProgress style={{marginLeft: '50%'}} /> :
                     <Grid container justify="center" alignItems="center" direction="column" maxwidth="sm">
                         <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                             {renderedData && renderedData.name}
@@ -226,14 +223,14 @@ const UserPage = ({ getData, data, history }) => {
                                 }
                             </Grid>
                         </div>
-                    </Grid>
+                    </Grid> }
                 </div>
                 <Container className={classes.cardGrid} maxwidth="md">
                     {/* End hero unit */}
                     <Grid container spacing={4}>
-                        {loaderPosts && <CircularProgress color="secondary" />}
-                        {currentUserPosts && currentUserPosts.length === 0 ? <Typography variant="h1" color="secondary">No Posts.</Typography> : ''}
-                        {currentUserPosts && currentUserPosts.map((card, i) => (
+                        {loaderPosts ? <CircularProgress color="secondary" /> :
+                        currentUserPosts && currentUserPosts.length === 0 ? <Typography variant="h1" color="secondary">No Posts.</Typography> :
+                        currentUserPosts && currentUserPosts.map((card, i) => (
                             <PostCard key={i} comments={card.comments}
                                           img={card.img}
                                           description={card.description}
@@ -244,6 +241,7 @@ const UserPage = ({ getData, data, history }) => {
                             />
                         ))}
                     </Grid>
+
                     { amountOfPages > 1 && <Pagination className={classes.pagination}
                                                        count={amountOfPages && amountOfPages}
                                                        page={activePage}

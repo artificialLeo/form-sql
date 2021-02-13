@@ -44,7 +44,6 @@ const App = () => {
 
     return (
         <div>
-            <Router history={historyRouting}>
                 <Switch>
                     {/*{isAuthenticated ? <Redirect exact from="/" to={`/user/:${user.email}`} /> : <Redirect  exact from="/" to="/login" />}*/}
 
@@ -59,7 +58,6 @@ const App = () => {
 
 
                 </Switch>
-            </Router>
         </div>
     );
 };
