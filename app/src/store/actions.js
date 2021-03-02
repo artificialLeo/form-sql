@@ -16,10 +16,7 @@ let initialState = {
 export function reducer(state = initialState, {type, payload}) {
     switch (type) {
         case GET_DATA:
-            return {
-                ...state,
-                data: payload
-            };
+            return payload;
 
         // Basic example
         // case BOOL:

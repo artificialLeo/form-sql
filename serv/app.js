@@ -18,7 +18,7 @@ const User = mongoose.model("User", userScheme);
 
 app.use(cors());
 
-const uri = "mongodb+srv://user:123@photo-app.iikrl.mongodb.net/appUsers?retryWrites=true&w=majority";
+const uri = "mongodb+srv://u:1@cluster0.ea0vh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false }, function(err){
     if(err) return console.log(err);

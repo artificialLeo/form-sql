@@ -24,7 +24,6 @@ import PostCard from "./components/PostCard/PostCard";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Pagination from "@material-ui/lab/Pagination";
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -105,20 +104,28 @@ const UserPage = ({ getData, data, history }) => {
     const [currentUserPosts, setCurrentUserPosts] = useState([]);
 
     let tempPath = window.location.pathname.split("/").slice(2)[0];// window.location.pathname.split("/").slice(2)
+
+
     useEffect( () => {
         getData();
 
         tempPath === user.email ? setIsRenderedDataAuthenticatedUser(true) : setIsRenderedDataAuthenticatedUser(false);
+        /**
+        * 1 redux "data flow"
+        * 2 script for heroku with node js
+        * */
+        // console.log(data)
+        // axios.get("http://localhost:4000/api/users/").then(response => {
+            let tempData = data.find(item => item.mail === tempPath);
+            console.log(data)
 
-        axios.get("http://localhost:4000/api/users/").then(response => {
-            let tempData = response.data.find(item => item.mail === tempPath);
             let pagesInWindow = Math.ceil(tempData.posts.length / 6);
 
             setAmountOfPages(pagesInWindow);
             setRenderedData(tempData);
             setRenderedPosts(tempData.posts);
             setLoaderInfo(false);
-        });
+        // });
 
         !isRenderedDataAuthenticatedUser &&
         axios.get("http://localhost:4000/api/users/" + tempPath, { params: { id: user.email }})
@@ -136,7 +143,7 @@ const UserPage = ({ getData, data, history }) => {
                 setLoaderPosts(false);
             });
 
-    }, [tempPath]);
+    }, [tempPath, data]);
 
     const followHandler = () => {
         let tempPath = history.location.pathname.split("/").slice(2)[0];

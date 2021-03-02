@@ -4,6 +4,8 @@
   "description": "This example is so cool.",
   "main": "cd/serv app.js",
   "scripts": {
+    "start": "npm start --prefix serv",
+    "build": "npm install --prefix serv && npm install --prefix app && npm run build --prefix app && rm -rf serv/public/* && cp -a app/build/. serv/public/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

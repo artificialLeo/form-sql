@@ -7,7 +7,11 @@ const setData = (payload) => ({
 });
 
 export const getData = () => async dispatch => {
-    axios.get("http://localhost:4000/api/users/").then(response => dispatch(setData(response.data)));
+
+    axios.get("http://localhost:4000/api/users/").then(response => {
+        console.log(response)
+        dispatch(setData(response.data))
+    });
 };
 
 ///*, DELETE_DATA, BOOL, N*/
