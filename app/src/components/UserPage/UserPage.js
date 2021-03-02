@@ -124,7 +124,7 @@ const UserPage = ({ getData, data, history }) => {
             setAmountOfPages(pagesInWindow);
             setRenderedData(tempData);
             setRenderedPosts(tempData.posts);
-            setLoaderInfo(false);
+            setLoaderInfo(false); //
         // });
 
         !isRenderedDataAuthenticatedUser &&
